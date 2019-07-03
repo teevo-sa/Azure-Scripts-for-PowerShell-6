@@ -1,7 +1,5 @@
 ## 
-#
-# Criando VM Linux 
-#
+# Criando VM Windows com discos Gerenciados.
 ##
 
 # Local
@@ -18,24 +16,22 @@ $VMSIZE = "Standard_B2MS"
 
 # Disk kind
 $STG_KIND = "Standard_LRS" 
+$DISK_SIZE = 128  # Tamanho em GB 
 
 # Configuração da VNET (Validar com a que existe no portal)
 $VNET =  "VNET-DINAMIZE"
 $SUBNET = "default"
-
 $IP = "172.21.32.50"
 
-$ADMIN_PASSWORD = 'tJb3N$hN76@Gd#qrh4zjY*v75!AH+DdfedsGh23v7Fy%5AsE48'
+# Credencias de Acesso
 $ADMIN_USER = "dnmz_admin"
+$ADMIN_PASSWORD = 'tJb3N$hN76@Gd#qrh4zjY*v75!AH+DdfedsGh23v7Fy%5AsE48'
 
 ##### 
 #  Preparing variables .. 
 #####
 
-# Storage Account_Name 
-$STGNAME = "stg" + ($VMNAME.Replace("-", "")).ToLower()
-
-# Linux Version
+# Windows Version
 $PUBLISHER= "MicrosoftWindowsServer"
 $OFFER = "WindowsServer"
 $SKU = "2016-Datacenter"
@@ -79,7 +75,7 @@ $CRED = New-Object System.Management.Automation.PSCredential ($ADMIN_USER, $Secu
 $VM = New-AzVMConfig -VMName $VMNAME -VMSize $VMSIZE 
 $VM = Set-AzVMOperatingSystem -VM $VM -Windows -ComputerName $VMNAME -Credential $CRED
 $VM = Set-AzVMSourceImage -VM $VM -PublisherName $PUBLISHER -Offer $OFFER -Skus $SKU -Version $VERSION
-$VM = Set-AzVMOSDisk -VM $VM -Name ($VMNAME + "-OSDisk") -CreateOption fromImage -Linux  -DiskSizeInGB $DISK_SIZE -StorageAccountType Standard_LRS
+$VM = Set-AzVMOSDisk -VM $VM -Name ($VMNAME + "-OSDisk") -CreateOption fromImage -Windows -DiskSizeInGB $DISK_SIZE -StorageAccountType $STG_KIND
 $VM = Add-AzVMNetworkInterface -VM $VM -Id $NIC.Id
 
 New-AzVM -VM $VM -ResourceGroupName $RSG.ResourceGroupName -Location $LOCATION -Verbose
