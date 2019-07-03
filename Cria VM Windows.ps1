@@ -25,7 +25,7 @@ $SUBNET = "default"
 
 $IP = "172.21.32.50"
 
-$ADMIN_PASSWORD = 'tJb3N$hN76@Gd#qrh4zjY*v75!AH+Gh23v7Fy%5AsE48'
+$ADMIN_PASSWORD = 'tJb3N$ffgfgDGBhN76@Gd#qrh4zjY*v75!AH+Ghss23v7Fy%5AsE48'
 $ADMIN_USER = "dnmz_admin"
 
 ##### 
